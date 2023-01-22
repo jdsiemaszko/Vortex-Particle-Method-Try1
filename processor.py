@@ -2,15 +2,7 @@
 Flow condition processor
 """
 from const import *
-from geometry_input import geometry_input
-
-# vortex particle needs: velocity components, vorticity value, volume?
-class Particle:
-    def __init__(self, pos, vort:float, vol:float):
-        self.pos = pos
-        self.vort = vort
-        self.vol = vol
-
+from preprocessing import geometry_input
 
 
 
