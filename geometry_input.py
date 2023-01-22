@@ -4,6 +4,7 @@ Import Airfoil Geometry
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from const import *
 def geometry_input(filename:str):
     """
     :param filename:
@@ -27,7 +28,6 @@ def geometry_input(filename:str):
 
     # return pd.read_csv(filename, sep=" ", header=None)[1:].to_numpy()
     # return np.genfromtxt(filename, delimiter=",", skip_header=True, dtype=float)
-file = 'E546.dat'
 
 if __name__ == '__main__':
     geo = geometry_input(file)
