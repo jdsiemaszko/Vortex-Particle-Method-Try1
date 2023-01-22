@@ -43,7 +43,7 @@ def geometry_input(filename:str):
     # return pd.read_csv(filename, sep=" ", header=None)[1:].to_numpy()
     # return np.genfromtxt(filename, delimiter=",", skip_header=True, dtype=float)
 
-def define_grid(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = h):
+def define_scene(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = h):
     """
     define the initial grid of particles
     :param upperfunc:
@@ -60,7 +60,7 @@ def define_grid(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = h
 
     irange = int((xu - xl)/grid_size)
     jrange = int((yu-yl)/grid_size)
-    scene = [0]*(irange*jrange)
+    scene = [0.]*(irange*jrange)
 
     for i in range(irange):
         for j in range(jrange):
@@ -72,15 +72,13 @@ def define_grid(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = h
                 index = i*jrange + j
                 scene[index] = Particle(pos=p, vel = [0., 0.], vort = 0., vol = 1.)
     print('initial positions defined')
-    return scene
-
-
+    return list(filter(lambda a: a != 0., scene))
 
 
 
 if __name__ == '__main__':
     geo, u, l = geometry_input(file)
-    scn = define_grid(u, l)
+    scn = define_scene(u, l)
     ylist = np.linspace(0., 1., 101)
     plt.plot(geo[:,0], geo[:,1], 'r--', label=file)
     # plt.plot(ylist, np.vectorize(u)(ylist), 'r--', label="upper edge")
