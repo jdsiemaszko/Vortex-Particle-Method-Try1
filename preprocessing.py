@@ -6,6 +6,7 @@ import scipy as sp
 import pandas as pd
 import matplotlib.pyplot as plt
 from const import *
+import random
 def geometry_input(filename:str):
     """
     :param filename:
@@ -73,6 +74,12 @@ def define_scene(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = 
                 scene[index] = Particle(pos=p, vel = [0., 0.], vort = 0., vol = 1.)
     print('initial positions defined')
     return list(filter(lambda a: a != 0., scene))
+
+def initialise_scene(scene):
+    for particle in scene:
+        # particle.vort = (random.random()-0.5)
+        particle.vort = (1-particle.pos[1])/100
+        # print(particle.vort)
 
 
 

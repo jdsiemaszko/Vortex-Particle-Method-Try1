@@ -18,7 +18,7 @@ domain = (xl, xu, yl, yu)
 
 
 file = 'E546.dat'
-plot_size = 1.
+plot_size = 5.
 
 # vortex particle needs: velocity components, vorticity value, volume?
 class Particle:
@@ -28,7 +28,7 @@ class Particle:
         self.vort = vort
         self.vol = vol
 
-def plot_scene(geo,u, l, scene):
+def plot_scene(geo, u, l, scene):
     """
     Plot the scene
     :param geo: geometry
@@ -50,6 +50,30 @@ def plot_scene(geo,u, l, scene):
         except:
             pass
     plt.scatter(partxlist, partylist, label='particle positions', s=[plot_size]*len(partxlist))
+
+    plt.legend()
+    plt.axis('equal')
+    plt.grid()
+    plt.show()
+
+def plot_vel(geo, u, l, scene):
+    ylist = np.linspace(0., 1., 101)
+    plt.fill_between(ylist, np.vectorize(u)(ylist), np.vectorize(l)(ylist), label=file)
+
+
+    poslist = []
+    vellist = []
+    for particle in scene:
+        try:
+            poslist.append(particle.pos)
+            vellist.append(particle.vel)
+        except:
+            pass
+
+    poslist = np.array(poslist)
+    vellist = np.array(vellist)
+
+    plt.quiver(poslist[:, 0], poslist[:, 1], vellist[:, 0], vellist[:, 1], color ='red', label="particle velocity")
 
     plt.legend()
     plt.axis('equal')
