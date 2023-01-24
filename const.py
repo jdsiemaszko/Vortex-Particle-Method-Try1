@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 dt = 1e-2
 h = 1e-1
-epsilon = 2.5*h
+epsilon = 3*h
 
 vinf = np.array([10., 0.])
 # computation bounds
@@ -56,7 +56,7 @@ def plot_scene(geo, u, l, scene):
     plt.grid()
     plt.show()
 
-def plot_vel(geo, u, l, scene):
+def plot_particle_vel(geo, u, l, scene):
     ylist = np.linspace(0., 1., 101)
     plt.fill_between(ylist, np.vectorize(u)(ylist), np.vectorize(l)(ylist), label=file)
 
@@ -73,8 +73,19 @@ def plot_vel(geo, u, l, scene):
     poslist = np.array(poslist)
     vellist = np.array(vellist)
 
+    plt.scatter(poslist[:, 0], poslist[:, 1], color='black', s = [plot_size]*len(poslist))
     plt.quiver(poslist[:, 0], poslist[:, 1], vellist[:, 0], vellist[:, 1], color ='red', label="particle velocity")
 
+    plt.legend()
+    plt.axis('equal')
+    plt.grid()
+    plt.show()
+
+def plot_vel_field(poslist, vellist, geo, u, l):
+    ylist = np.linspace(0., 1., 101)
+    plt.fill_between(ylist, np.vectorize(u)(ylist), np.vectorize(l)(ylist), label=file)
+    # plt.scatter(poslist[:, 0], poslist[:, 1], color='black', s=[plot_size] * len(poslist))
+    plt.quiver(poslist[:, 0], poslist[:, 1], vellist[:, 0], vellist[:, 1], color='red', label="velocity")
     plt.legend()
     plt.axis('equal')
     plt.grid()

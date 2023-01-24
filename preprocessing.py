@@ -2,11 +2,12 @@
 Import Airfoil Geometry
 """
 import numpy as np
-import scipy as sp
+import scipy.interpolate
 import pandas as pd
 import matplotlib.pyplot as plt
 from const import *
 import random
+
 def geometry_input(filename:str):
     """
     :param filename:
@@ -36,9 +37,8 @@ def geometry_input(filename:str):
         lower_edge = np.array(points[splitting_index:])
         points = np.array(points)
 
-        upper_edge_func = sp.interpolate.interp1d(upper_edge[:, 0], upper_edge[:, 1], kind='cubic', fill_value='extrapolate')
-        lower_edge_func = sp.interpolate.interp1d(lower_edge[:, 0], lower_edge[:, 1], kind='cubic', fill_value='extrapolate')
-
+        upper_edge_func = scipy.interpolate.interp1d(upper_edge[:, 0], upper_edge[:, 1], kind='cubic', fill_value='extrapolate')
+        lower_edge_func = scipy.interpolate.interp1d(lower_edge[:, 0], lower_edge[:, 1], kind='cubic', fill_value='extrapolate')
     return points, upper_edge_func, lower_edge_func
 
     # return pd.read_csv(filename, sep=" ", header=None)[1:].to_numpy()
@@ -78,7 +78,7 @@ def define_scene(upperfunc, lowerfunc, bounds:tuple = domain, grid_size:float = 
 def initialise_scene(scene):
     for particle in scene:
         # particle.vort = (random.random()-0.5)
-        particle.vort = (1-particle.pos[1])/100
+        particle.vort = particle.pos[0]/100
         # print(particle.vort)
 
 
